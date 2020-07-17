@@ -2,6 +2,7 @@ import 'package:chopper/chopper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
+import 'package:sowa_pokedex/network/common/network_constants.dart';
 
 import 'di.iconfig.dart';
 
@@ -17,7 +18,7 @@ abstract class ApplicationModule {
 
   @lazySingleton
   ChopperClient get chopperClient => ChopperClient(
-        baseUrl: 'https://pokeapi.co/api/v2/',
+        baseUrl: kBackendUrl,
         converter: JsonConverter(),
       );
 }

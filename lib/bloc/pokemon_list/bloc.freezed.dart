@@ -23,6 +23,18 @@ class _$PokemonListEventTearOff {
       pokemon,
     );
   }
+
+// ignore: unused_element
+  ViewEntered viewEntered() {
+    return const ViewEntered();
+  }
+
+// ignore: unused_element
+  PokemonListUpdated pokemonListUpdated(List<Pokemon> pokemonList) {
+    return PokemonListUpdated(
+      pokemonList,
+    );
+  }
 }
 
 // ignore: unused_element
@@ -33,22 +45,30 @@ mixin _$PokemonListEvent {
   Result when<Result extends Object>({
     @required Result fetchMoreData(),
     @required Result tileClicked(Pokemon pokemon),
+    @required Result viewEntered(),
+    @required Result pokemonListUpdated(List<Pokemon> pokemonList),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result fetchMoreData(),
     Result tileClicked(Pokemon pokemon),
+    Result viewEntered(),
+    Result pokemonListUpdated(List<Pokemon> pokemonList),
     @required Result orElse(),
   });
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result fetchMoreData(FetchMoreData value),
     @required Result tileClicked(TileClicked value),
+    @required Result viewEntered(ViewEntered value),
+    @required Result pokemonListUpdated(PokemonListUpdated value),
   });
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result fetchMoreData(FetchMoreData value),
     Result tileClicked(TileClicked value),
+    Result viewEntered(ViewEntered value),
+    Result pokemonListUpdated(PokemonListUpdated value),
     @required Result orElse(),
   });
 }
@@ -106,9 +126,13 @@ class _$FetchMoreData implements FetchMoreData {
   Result when<Result extends Object>({
     @required Result fetchMoreData(),
     @required Result tileClicked(Pokemon pokemon),
+    @required Result viewEntered(),
+    @required Result pokemonListUpdated(List<Pokemon> pokemonList),
   }) {
     assert(fetchMoreData != null);
     assert(tileClicked != null);
+    assert(viewEntered != null);
+    assert(pokemonListUpdated != null);
     return fetchMoreData();
   }
 
@@ -117,6 +141,8 @@ class _$FetchMoreData implements FetchMoreData {
   Result maybeWhen<Result extends Object>({
     Result fetchMoreData(),
     Result tileClicked(Pokemon pokemon),
+    Result viewEntered(),
+    Result pokemonListUpdated(List<Pokemon> pokemonList),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -131,9 +157,13 @@ class _$FetchMoreData implements FetchMoreData {
   Result map<Result extends Object>({
     @required Result fetchMoreData(FetchMoreData value),
     @required Result tileClicked(TileClicked value),
+    @required Result viewEntered(ViewEntered value),
+    @required Result pokemonListUpdated(PokemonListUpdated value),
   }) {
     assert(fetchMoreData != null);
     assert(tileClicked != null);
+    assert(viewEntered != null);
+    assert(pokemonListUpdated != null);
     return fetchMoreData(this);
   }
 
@@ -142,6 +172,8 @@ class _$FetchMoreData implements FetchMoreData {
   Result maybeMap<Result extends Object>({
     Result fetchMoreData(FetchMoreData value),
     Result tileClicked(TileClicked value),
+    Result viewEntered(ViewEntered value),
+    Result pokemonListUpdated(PokemonListUpdated value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -215,9 +247,13 @@ class _$TileClicked implements TileClicked {
   Result when<Result extends Object>({
     @required Result fetchMoreData(),
     @required Result tileClicked(Pokemon pokemon),
+    @required Result viewEntered(),
+    @required Result pokemonListUpdated(List<Pokemon> pokemonList),
   }) {
     assert(fetchMoreData != null);
     assert(tileClicked != null);
+    assert(viewEntered != null);
+    assert(pokemonListUpdated != null);
     return tileClicked(pokemon);
   }
 
@@ -226,6 +262,8 @@ class _$TileClicked implements TileClicked {
   Result maybeWhen<Result extends Object>({
     Result fetchMoreData(),
     Result tileClicked(Pokemon pokemon),
+    Result viewEntered(),
+    Result pokemonListUpdated(List<Pokemon> pokemonList),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -240,9 +278,13 @@ class _$TileClicked implements TileClicked {
   Result map<Result extends Object>({
     @required Result fetchMoreData(FetchMoreData value),
     @required Result tileClicked(TileClicked value),
+    @required Result viewEntered(ViewEntered value),
+    @required Result pokemonListUpdated(PokemonListUpdated value),
   }) {
     assert(fetchMoreData != null);
     assert(tileClicked != null);
+    assert(viewEntered != null);
+    assert(pokemonListUpdated != null);
     return tileClicked(this);
   }
 
@@ -251,6 +293,8 @@ class _$TileClicked implements TileClicked {
   Result maybeMap<Result extends Object>({
     Result fetchMoreData(FetchMoreData value),
     Result tileClicked(TileClicked value),
+    Result viewEntered(ViewEntered value),
+    Result pokemonListUpdated(PokemonListUpdated value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -266,6 +310,234 @@ abstract class TileClicked implements PokemonListEvent {
 
   Pokemon get pokemon;
   $TileClickedCopyWith<TileClicked> get copyWith;
+}
+
+abstract class $ViewEnteredCopyWith<$Res> {
+  factory $ViewEnteredCopyWith(
+          ViewEntered value, $Res Function(ViewEntered) then) =
+      _$ViewEnteredCopyWithImpl<$Res>;
+}
+
+class _$ViewEnteredCopyWithImpl<$Res>
+    extends _$PokemonListEventCopyWithImpl<$Res>
+    implements $ViewEnteredCopyWith<$Res> {
+  _$ViewEnteredCopyWithImpl(
+      ViewEntered _value, $Res Function(ViewEntered) _then)
+      : super(_value, (v) => _then(v as ViewEntered));
+
+  @override
+  ViewEntered get _value => super._value as ViewEntered;
+}
+
+class _$ViewEntered implements ViewEntered {
+  const _$ViewEntered();
+
+  @override
+  String toString() {
+    return 'PokemonListEvent.viewEntered()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is ViewEntered);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result fetchMoreData(),
+    @required Result tileClicked(Pokemon pokemon),
+    @required Result viewEntered(),
+    @required Result pokemonListUpdated(List<Pokemon> pokemonList),
+  }) {
+    assert(fetchMoreData != null);
+    assert(tileClicked != null);
+    assert(viewEntered != null);
+    assert(pokemonListUpdated != null);
+    return viewEntered();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result fetchMoreData(),
+    Result tileClicked(Pokemon pokemon),
+    Result viewEntered(),
+    Result pokemonListUpdated(List<Pokemon> pokemonList),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (viewEntered != null) {
+      return viewEntered();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result fetchMoreData(FetchMoreData value),
+    @required Result tileClicked(TileClicked value),
+    @required Result viewEntered(ViewEntered value),
+    @required Result pokemonListUpdated(PokemonListUpdated value),
+  }) {
+    assert(fetchMoreData != null);
+    assert(tileClicked != null);
+    assert(viewEntered != null);
+    assert(pokemonListUpdated != null);
+    return viewEntered(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result fetchMoreData(FetchMoreData value),
+    Result tileClicked(TileClicked value),
+    Result viewEntered(ViewEntered value),
+    Result pokemonListUpdated(PokemonListUpdated value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (viewEntered != null) {
+      return viewEntered(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class ViewEntered implements PokemonListEvent {
+  const factory ViewEntered() = _$ViewEntered;
+}
+
+abstract class $PokemonListUpdatedCopyWith<$Res> {
+  factory $PokemonListUpdatedCopyWith(
+          PokemonListUpdated value, $Res Function(PokemonListUpdated) then) =
+      _$PokemonListUpdatedCopyWithImpl<$Res>;
+  $Res call({List<Pokemon> pokemonList});
+}
+
+class _$PokemonListUpdatedCopyWithImpl<$Res>
+    extends _$PokemonListEventCopyWithImpl<$Res>
+    implements $PokemonListUpdatedCopyWith<$Res> {
+  _$PokemonListUpdatedCopyWithImpl(
+      PokemonListUpdated _value, $Res Function(PokemonListUpdated) _then)
+      : super(_value, (v) => _then(v as PokemonListUpdated));
+
+  @override
+  PokemonListUpdated get _value => super._value as PokemonListUpdated;
+
+  @override
+  $Res call({
+    Object pokemonList = freezed,
+  }) {
+    return _then(PokemonListUpdated(
+      pokemonList == freezed
+          ? _value.pokemonList
+          : pokemonList as List<Pokemon>,
+    ));
+  }
+}
+
+class _$PokemonListUpdated implements PokemonListUpdated {
+  const _$PokemonListUpdated(this.pokemonList) : assert(pokemonList != null);
+
+  @override
+  final List<Pokemon> pokemonList;
+
+  @override
+  String toString() {
+    return 'PokemonListEvent.pokemonListUpdated(pokemonList: $pokemonList)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is PokemonListUpdated &&
+            (identical(other.pokemonList, pokemonList) ||
+                const DeepCollectionEquality()
+                    .equals(other.pokemonList, pokemonList)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(pokemonList);
+
+  @override
+  $PokemonListUpdatedCopyWith<PokemonListUpdated> get copyWith =>
+      _$PokemonListUpdatedCopyWithImpl<PokemonListUpdated>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result fetchMoreData(),
+    @required Result tileClicked(Pokemon pokemon),
+    @required Result viewEntered(),
+    @required Result pokemonListUpdated(List<Pokemon> pokemonList),
+  }) {
+    assert(fetchMoreData != null);
+    assert(tileClicked != null);
+    assert(viewEntered != null);
+    assert(pokemonListUpdated != null);
+    return pokemonListUpdated(pokemonList);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result fetchMoreData(),
+    Result tileClicked(Pokemon pokemon),
+    Result viewEntered(),
+    Result pokemonListUpdated(List<Pokemon> pokemonList),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (pokemonListUpdated != null) {
+      return pokemonListUpdated(pokemonList);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result fetchMoreData(FetchMoreData value),
+    @required Result tileClicked(TileClicked value),
+    @required Result viewEntered(ViewEntered value),
+    @required Result pokemonListUpdated(PokemonListUpdated value),
+  }) {
+    assert(fetchMoreData != null);
+    assert(tileClicked != null);
+    assert(viewEntered != null);
+    assert(pokemonListUpdated != null);
+    return pokemonListUpdated(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result fetchMoreData(FetchMoreData value),
+    Result tileClicked(TileClicked value),
+    Result viewEntered(ViewEntered value),
+    Result pokemonListUpdated(PokemonListUpdated value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (pokemonListUpdated != null) {
+      return pokemonListUpdated(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class PokemonListUpdated implements PokemonListEvent {
+  const factory PokemonListUpdated(List<Pokemon> pokemonList) =
+      _$PokemonListUpdated;
+
+  List<Pokemon> get pokemonList;
+  $PokemonListUpdatedCopyWith<PokemonListUpdated> get copyWith;
 }
 
 class _$PokemonListStateTearOff {

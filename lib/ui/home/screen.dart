@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sowa_pokedex/bloc/pokemon_list/bloc.dart';
-import 'package:sowa_pokedex/di.dart';
 import 'package:sowa_pokedex/ui/common/images.dart';
 import 'package:sowa_pokedex/ui/home/state/empty_list_view.dart';
 import 'package:sowa_pokedex/ui/home/state/initial_view.dart';
@@ -11,6 +10,9 @@ import 'package:sowa_pokedex/ui/splash/screen.dart';
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    BlocProvider.of<PokemonListBloc>(context).add(
+      PokemonListEvent.viewEntered(),
+    );
     return Scaffold(
       appBar: appBar(),
       body: BlocBuilder<PokemonListBloc, PokemonListState>(

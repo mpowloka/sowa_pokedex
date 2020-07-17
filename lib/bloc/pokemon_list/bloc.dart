@@ -16,7 +16,10 @@ class PokemonListBloc extends Bloc<PokemonListEvent, PokemonListState> {
   final PokemonRepository _pokemonRepository;
   final GlobalKey<NavigatorState> _navigation;
 
-  PokemonListBloc(this._pokemonRepository, this._navigation) : super(PokemonListState.initial());
+  PokemonListBloc(
+    this._pokemonRepository,
+    this._navigation,
+  ) : super(PokemonListState.initial());
 
   @override
   Stream<PokemonListState> mapEventToState(
@@ -25,20 +28,34 @@ class PokemonListBloc extends Bloc<PokemonListEvent, PokemonListState> {
     yield* event.map(
       fetchMoreData: fetchMoreData,
       tileClicked: tileClicked,
+      viewEntered: viewEntered,
+      pokemonListUpdated: pokemonListUpdated,
     );
   }
 
   Stream<PokemonListState> fetchMoreData(final FetchMoreData event) async* {
-    await _pokemonRepository.fetchPokemonBatch();
-
-    if(_pokemonRepository.pokemonList.isEmpty) {
-      yield PokemonListState.emptyList('No Pokemon Available');
-    } else {
-      yield PokemonListState.pokemonListAvailable(_pokemonRepository.pokemonList);
-    }
+    _pokemonRepository.fetchPokemonBatch();
   }
 
   Stream<PokemonListState> tileClicked(final TileClicked event) async* {
     //navigate to details
+  }
+
+  Stream<PokemonListState> viewEntered(
+    final ViewEntered event,
+  ) async* {
+    _pokemonRepository.watchPokemonList().listen((pokemonList) {
+      add(PokemonListEvent.pokemonListUpdated(pokemonList));
+    });
+  }
+
+  Stream<PokemonListState> pokemonListUpdated(
+    final PokemonListUpdated event,
+  ) async* {
+    if (event.pokemonList.isEmpty) {
+      yield PokemonListState.emptyList('No Pokemon available');
+    } else {
+      yield PokemonListState.pokemonListAvailable(event.pokemonList);
+    }
   }
 }
