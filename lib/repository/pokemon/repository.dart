@@ -5,7 +5,7 @@ import 'package:sowa_pokedex/network/pokemon/fetch_pokemon_batch.dart';
 import 'package:sowa_pokedex/network/pokemon/fetch_pokemon_details.dart';
 import 'package:sowa_pokedex/network/pokemon/response/pokemon_batch.dart';
 import 'package:sowa_pokedex/repository/pokemon/mapper/pokemon_mapper.dart';
-import 'package:sowa_pokedex/repository/pokemon/pokemon.dart';
+import 'package:sowa_pokedex/repository/pokemon/model/pokemon.dart';
 
 @lazySingleton
 class PokemonRepository {
@@ -22,9 +22,11 @@ class PokemonRepository {
   );
 
   Stream<List<Pokemon>> watchPokemonList() {
-    return _pokemonDao
-        .watchPokemonList()
-        .map((event) => event.map((e) => Pokemon(e.name)).toList());
+    return _pokemonDao.watchPokemonBundleList().map((pokemonBundleList) {
+      return pokemonBundleList.map((pokemonBundle) {
+        return _pokemonMapper.databaseToDomain(pokemonBundle);
+      }).toList();
+    });
   }
 
   void fetchPokemonBatch() async {

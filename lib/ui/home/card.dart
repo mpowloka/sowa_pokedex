@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:sowa_pokedex/repository/pokemon/pokemon.dart';
+import 'package:sowa_pokedex/repository/pokemon/model/pokemon.dart';
 import 'package:sowa_pokedex/ui/common/images.dart';
 
 class PokemonCard extends StatelessWidget {

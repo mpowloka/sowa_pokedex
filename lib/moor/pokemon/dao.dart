@@ -1,6 +1,8 @@
 import 'package:injectable/injectable.dart';
 import 'package:moor_flutter/moor_flutter.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:sowa_pokedex/moor/database.dart';
+import 'package:sowa_pokedex/moor/pokemon/pokemon_bundle.dart';
 import 'package:sowa_pokedex/moor/pokemon/table/pokemon.dart';
 import 'package:sowa_pokedex/moor/pokemon/table/pokemon_stat_link.dart';
 import 'package:sowa_pokedex/moor/pokemon/table/pokemon_type_link.dart';
@@ -24,24 +26,62 @@ class PokemonDao extends DatabaseAccessor<PokemonDatabase>
   Future<int> getPokemonCount() async =>
       (await select(moorPokemon).get()).length;
 
-  Stream<List<MoorPokemonData>> watchPokemonList() {
-    return select(moorPokemon).watch();
-  }
+  Stream<List<MoorPokemonBundle>> watchPokemonBundleList() {
+    final pokemonStream = select(moorPokemon).watch();
 
-  Stream<List<MoorPokemonTypeData>> watchPokemonTypesList() {
-    return select(moorPokemonType).watch();
-  }
+    return pokemonStream.switchMap((pokemonList) {
+      final idToPokemonMap = {
+        for (var pokemon in pokemonList) pokemon.id: pokemon
+      };
+      final ids = idToPokemonMap.keys;
 
-  Stream<List<MoorPokemonStatData>> watchPokemonStatList() {
-    return select(moorPokemonStat).watch();
-  }
+      final typesQuery = select(moorPokemonTypeLink).join([
+        innerJoin(
+          moorPokemonType,
+          moorPokemonType.id.equalsExp(moorPokemonTypeLink.typeId),
+        )
+      ])
+        ..where(moorPokemonTypeLink.pokemonId.isIn(ids));
 
-  Stream<List<MoorPokemonTypeLinkData>> watchPokemonTypeLinksList() {
-    return select(moorPokemonTypeLink).watch();
-  }
+      final statsQuery = select(moorPokemonStatLink).join([
+        innerJoin(
+          moorPokemonStat,
+          moorPokemonStat.id.equalsExp(moorPokemonStatLink.statId),
+        )
+      ])
+        ..where(moorPokemonStatLink.pokemonId.isIn(ids));
 
-  Stream<List<MoorPokemonStatLinkData>> watchPokemonStatLinkList() {
-    return select(moorPokemonStatLink).watch();
+      return CombineLatestStream.combine2(
+        typesQuery.watch(),
+        statsQuery.watch(),
+        (List<TypedResult> typeRows, List<TypedResult> statRows) {
+          final pokemonIdToTypes = <int, List<MoorPokemonTypeData>>{};
+          final pokemonIdToStats = <int, List<MoorPokemonStatData>>{};
+
+          for (var typeRow in typeRows) {
+            final type = typeRow.readTable(moorPokemonType);
+            final pokemonId = typeRow.readTable(moorPokemonTypeLink).pokemonId;
+
+            pokemonIdToTypes.putIfAbsent(pokemonId, () => []).add(type);
+          }
+
+          for (var statRow in statRows) {
+            final stat = statRow.readTable(moorPokemonStat);
+            final pokemonId = statRow.readTable(moorPokemonStatLink).pokemonId;
+
+            pokemonIdToStats.putIfAbsent(pokemonId, () => []).add(stat);
+          }
+
+          return ids.map((pokemonId) {
+            return MoorPokemonBundle(
+              idToPokemonMap[pokemonId],
+              pokemonIdToTypes[pokemonId],
+              pokemonIdToStats[pokemonId],
+            );
+          }).toList();
+        },
+      );
+    });
   }
 
   Future<void> insertPokemon(final Insertable<MoorPokemonData> pokemon) async {

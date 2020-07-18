@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
-import 'package:sowa_pokedex/repository/pokemon/pokemon.dart';
+import 'package:sowa_pokedex/repository/pokemon/model/pokemon.dart';
 import 'package:sowa_pokedex/repository/pokemon/repository.dart';
 
 part 'bloc.freezed.dart';

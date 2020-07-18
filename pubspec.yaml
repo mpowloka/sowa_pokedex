@@ -39,6 +39,7 @@ dependencies:
   lint: ^1.2.0
   logger: ^0.9.1
   shared_preferences: ^0.5.8
+  rxdart: ^0.24.1
 
 
 dev_dependencies:
