@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sowa_pokedex/bloc/pokemon_list/bloc.dart';
+import 'package:sowa_pokedex/repository/pokemon/model/pokemon.dart';
 import 'package:sowa_pokedex/ui/common/images.dart';
 import 'package:sowa_pokedex/ui/home/state/empty_list_view.dart';
 import 'package:sowa_pokedex/ui/home/state/initial_view.dart';
 import 'package:sowa_pokedex/ui/home/state/pokemon_list_available_view.dart';
-import 'package:sowa_pokedex/ui/splash/screen.dart';
 
 class HomeScreen extends StatelessWidget {
+  void onPokemonClicked(final BuildContext context, final Pokemon pokemon) {
+    BlocProvider.of<PokemonListBloc>(context)
+        .add(PokemonListEvent.pokemonPicked(pokemon));
+  }
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     BlocProvider.of<PokemonListBloc>(context).add(
       PokemonListEvent.viewEntered(),
     );
@@ -19,29 +24,35 @@ class HomeScreen extends StatelessWidget {
         builder: (context, state) {
           return state.map(
             initial: (_) => InitialView(),
-            pokemonListAvailable: (state) => PokemonListAvailableView(state),
+            pokemonListAvailable: (state) => PokemonListAvailableView(
+              state,
+              (pokemon) => onPokemonClicked(context, pokemon),
+            ),
             emptyList: (state) => EmptyListView(state),
           );
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.file_download),
-        onPressed: () {
-          BlocProvider.of<PokemonListBloc>(context)
-              .add(PokemonListEvent.fetchMoreData());
-        },
-      ),
+      floatingActionButton: fab(context),
     );
   }
 
-  AppBar appBar() => AppBar(
-        leading: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Hero(
-            child: Image.asset(Images.pokeball),
-            tag: SplashScreen.heroTag,
-          ),
-        ),
-        title: Text('Sowa Pokedex'),
-      );
+  Widget fab(final BuildContext context) {
+    return FloatingActionButton(
+      child: Icon(Icons.file_download),
+      onPressed: () {
+        BlocProvider.of<PokemonListBloc>(context)
+            .add(PokemonListEvent.fetchMoreData());
+      },
+    );
+  }
+
+  AppBar appBar() {
+    return AppBar(
+      leading: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Image.asset(Images.pokeball),
+      ),
+      title: Text('Sowa Pokedex'),
+    );
+  }
 }

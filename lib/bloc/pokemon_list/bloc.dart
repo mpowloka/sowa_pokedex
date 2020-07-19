@@ -4,6 +4,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:sowa_pokedex/repository/pokemon/model/pokemon.dart';
 import 'package:sowa_pokedex/repository/pokemon/repository.dart';
+import 'package:sowa_pokedex/ui/pokemon_details/navigation.dart';
 
 part 'bloc.freezed.dart';
 
@@ -27,7 +28,7 @@ class PokemonListBloc extends Bloc<PokemonListEvent, PokemonListState> {
   ) async* {
     yield* event.map(
       fetchMoreData: fetchMoreData,
-      tileClicked: tileClicked,
+      pokemonPicked: pokemonPicked,
       viewEntered: viewEntered,
       pokemonListUpdated: pokemonListUpdated,
     );
@@ -37,8 +38,9 @@ class PokemonListBloc extends Bloc<PokemonListEvent, PokemonListState> {
     _pokemonRepository.fetchPokemonBatch();
   }
 
-  Stream<PokemonListState> tileClicked(final TileClicked event) async* {
-    //navigate to details
+  Stream<PokemonListState> pokemonPicked(final PokemonPicked event) async* {
+    _navigation.currentState
+        .push(PokemonDetailsNavigation.getRoute(event.pokemon));
   }
 
   Stream<PokemonListState> viewEntered(
@@ -53,7 +55,8 @@ class PokemonListBloc extends Bloc<PokemonListEvent, PokemonListState> {
     final PokemonListUpdated event,
   ) async* {
     if (event.pokemonList.isEmpty) {
-      yield PokemonListState.emptyList('No Pokemon available');
+      yield PokemonListState.emptyList(
+          'No Pokemon available yet.\n\nPress fab to fetch another batch from the server.');
     } else {
       yield PokemonListState.pokemonListAvailable(event.pokemonList);
     }

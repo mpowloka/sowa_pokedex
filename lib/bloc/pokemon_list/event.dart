@@ -4,9 +4,9 @@ part of 'bloc.dart';
 abstract class PokemonListEvent with _$PokemonListEvent {
   const factory PokemonListEvent.fetchMoreData() = FetchMoreData;
 
-  const factory PokemonListEvent.tileClicked(
+  const factory PokemonListEvent.pokemonPicked(
     final Pokemon pokemon,
-  ) = TileClicked;
+  ) = PokemonPicked;
 
   const factory PokemonListEvent.viewEntered() = ViewEntered;
 

@@ -4,14 +4,22 @@ import 'package:sowa_pokedex/moor/pokemon/dao.dart';
 import 'package:sowa_pokedex/network/pokemon/fetch_pokemon_batch.dart';
 import 'package:sowa_pokedex/network/pokemon/fetch_pokemon_details.dart';
 import 'package:sowa_pokedex/network/pokemon/response/pokemon_batch.dart';
+import 'package:sowa_pokedex/network/pokemon/response/pokemon_details.dart';
 import 'package:sowa_pokedex/repository/pokemon/mapper/pokemon_mapper.dart';
+import 'package:sowa_pokedex/repository/pokemon/mapper/pokemon_stat_mapper.dart';
 import 'package:sowa_pokedex/repository/pokemon/model/pokemon.dart';
+
+import 'mapper/pokemon_type_mapper.dart';
+
+const _pokemonBatchSize = 10;
 
 @lazySingleton
 class PokemonRepository {
   final FetchPokemonBatch _fetchPokemonBatch;
   final FetchPokemonDetails _fetchPokemonDetails;
   final PokemonMapper _pokemonMapper;
+  final PokemonStatMapper _pokemonStatMapper;
+  final PokemonTypeMapper _pokemonTypeMapper;
   final PokemonDao _pokemonDao;
 
   PokemonRepository(
@@ -19,6 +27,8 @@ class PokemonRepository {
     this._pokemonDao,
     this._fetchPokemonDetails,
     this._pokemonMapper,
+    this._pokemonStatMapper,
+    this._pokemonTypeMapper,
   );
 
   Stream<List<Pokemon>> watchPokemonList() {
@@ -31,12 +41,14 @@ class PokemonRepository {
 
   void fetchPokemonBatch() async {
     final offset = await _pokemonDao.getPokemonCount();
-    final result = await _fetchPokemonBatch.fetch(10, offset);
+    final result = await _fetchPokemonBatch.fetch(_pokemonBatchSize, offset);
 
     result.fold(
-      (pokemonBatch) {
+      (pokemonBatch) async {
         Logger().i('Pokemon batch fetched: $pokemonBatch');
-        pokemonBatch.results.forEach(_downloadPokemonDetails);
+        for (final result in pokemonBatch.results) {
+          await _downloadPokemonDetails(result);
+        }
       },
       (networkError) {
         Logger().e('Failed to fetch Pokemon batch: $networkError');
@@ -44,21 +56,43 @@ class PokemonRepository {
     );
   }
 
-  void _downloadPokemonDetails(
+  Future<void> _downloadPokemonDetails(
     final NetworkPokemonShortInfo shortInfo,
   ) async {
     final result = await _fetchPokemonDetails.fetch(shortInfo.name);
 
     result.fold(
-      (pokemonDetails) {
-        Logger().i('Pokemon batch fetched: $pokemonDetails');
-        _pokemonDao.insertPokemon(
-          _pokemonMapper.networkToDatabase(pokemonDetails),
-        );
+      (pokemonDetails) async {
+        Logger().i('Pokemon details fetched: $pokemonDetails');
+        await _persistPokemonDetails(pokemonDetails);
       },
       (networkError) {
         Logger().e('Failed to fetch Pokemon details: $networkError');
       },
     );
+  }
+
+  Future _persistPokemonDetails(PokemonDetailsResponse pokemonDetails) async {
+    final pokemonId = await _pokemonDao.insertOrReplacePokemon(
+      _pokemonMapper.networkToDatabase(pokemonDetails),
+    );
+    for (final stat in pokemonDetails.stats) {
+      final statId = await _pokemonDao.insertOrReplacePokemonStat(
+          _pokemonStatMapper.networkToDatabase(stat));
+      Logger().d('Inserted pokemonStat: $stat');
+      await _pokemonDao.linkPokemonWithStat(pokemonId, statId);
+      Logger().d(
+        'Linked pokemonStat $stat with pokemonId: $pokemonId (pokemonName = ${pokemonDetails.name})',
+      );
+    }
+    for (final type in pokemonDetails.types) {
+      final typeId = await _pokemonDao.insertOrReplacePokemonType(
+          _pokemonTypeMapper.networkToDatabase(type));
+      Logger().d('Inserted pokemonType: $type');
+      await _pokemonDao.linkPokemonWithType(pokemonId, typeId);
+      Logger().d(
+        'Linked pokemonType $type with pokemonId: $pokemonId (pokemonName = ${pokemonDetails.name})',
+      );
+    }
   }
 }

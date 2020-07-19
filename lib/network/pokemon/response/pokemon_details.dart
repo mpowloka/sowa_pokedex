@@ -30,6 +30,36 @@ class PokemonDetailsResponse {
   }
 
   Map<String, dynamic> toJson() => _$PokemonDetailsResponseToJson(this);
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is PokemonDetailsResponse &&
+          runtimeType == other.runtimeType &&
+          exp == other.exp &&
+          height == other.height &&
+          id == other.id &&
+          name == other.name &&
+          sprites == other.sprites &&
+          stats == other.stats &&
+          types == other.types &&
+          weight == other.weight;
+
+  @override
+  int get hashCode =>
+      exp.hashCode ^
+      height.hashCode ^
+      id.hashCode ^
+      name.hashCode ^
+      sprites.hashCode ^
+      stats.hashCode ^
+      types.hashCode ^
+      weight.hashCode;
+
+  @override
+  String toString() {
+    return 'PokemonDetailsResponse{exp: $exp, height: $height, id: $id, name: $name, sprites: $sprites, stats: $stats, types: $types, weight: $weight}';
+  }
 }
 
 @JsonSerializable()
@@ -46,6 +76,22 @@ class NetworkPokemonSprites {
   }
 
   Map<String, dynamic> toJson() => _$NetworkPokemonSpritesToJson(this);
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is NetworkPokemonSprites &&
+          runtimeType == other.runtimeType &&
+          backSprite == other.backSprite &&
+          frontSprite == other.frontSprite;
+
+  @override
+  int get hashCode => backSprite.hashCode ^ frontSprite.hashCode;
+
+  @override
+  String toString() {
+    return 'NetworkPokemonSprites{backSprite: $backSprite, frontSprite: $frontSprite}';
+  }
 }
 
 @JsonSerializable()
@@ -62,6 +108,22 @@ class NetworkPokemonStat {
   }
 
   Map<String, dynamic> toJson() => _$NetworkPokemonStatToJson(this);
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is NetworkPokemonStat &&
+          runtimeType == other.runtimeType &&
+          statValue == other.statValue &&
+          statName == other.statName;
+
+  @override
+  int get hashCode => statValue.hashCode ^ statName.hashCode;
+
+  @override
+  String toString() {
+    return 'NetworkPokemonStat{statValue: $statValue, statName: $statName}';
+  }
 }
 
 @JsonSerializable()
@@ -75,6 +137,21 @@ class NetworkPokemonStatName {
   }
 
   Map<String, dynamic> toJson() => _$NetworkPokemonStatNameToJson(this);
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is NetworkPokemonStatName &&
+          runtimeType == other.runtimeType &&
+          name == other.name;
+
+  @override
+  int get hashCode => name.hashCode;
+
+  @override
+  String toString() {
+    return 'NetworkPokemonStatName{name: $name}';
+  }
 }
 
 @JsonSerializable()
@@ -88,6 +165,21 @@ class NetworkPokemonType {
   }
 
   Map<String, dynamic> toJson() => _$NetworkPokemonTypeToJson(this);
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is NetworkPokemonType &&
+          runtimeType == other.runtimeType &&
+          type == other.type;
+
+  @override
+  int get hashCode => type.hashCode;
+
+  @override
+  String toString() {
+    return 'NetworkPokemonType{type: $type}';
+  }
 }
 
 @JsonSerializable()
@@ -101,4 +193,19 @@ class NetworkPokemonTypeName {
   }
 
   Map<String, dynamic> toJson() => _$NetworkPokemonTypeNameToJson(this);
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is NetworkPokemonTypeName &&
+          runtimeType == other.runtimeType &&
+          name == other.name;
+
+  @override
+  int get hashCode => name.hashCode;
+
+  @override
+  String toString() {
+    return 'NetworkPokemonTypeName{name: $name}';
+  }
 }

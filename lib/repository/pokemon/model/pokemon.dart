@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:sowa_pokedex/repository/pokemon/model/pokemon_stat.dart';
 import 'package:sowa_pokedex/repository/pokemon/model/pokemon_type.dart';
 
@@ -8,6 +9,7 @@ class Pokemon {
   final int weight;
   final String name;
   final String sprite;
+  final Color color;
   final List<PokemonStat> stats;
   final List<PokemonType> types;
 
@@ -20,35 +22,38 @@ class Pokemon {
     this.sprite,
     this.stats,
     this.types,
+    this.color,
   );
 
   @override
-  bool operator ==(final Object other) =>
+  bool operator ==(Object other) =>
       identical(this, other) ||
       other is Pokemon &&
           runtimeType == other.runtimeType &&
           id == other.id &&
           exp == other.exp &&
           height == other.height &&
+          weight == other.weight &&
           name == other.name &&
           sprite == other.sprite &&
+          color == other.color &&
           stats == other.stats &&
-          types == other.types &&
-          weight == other.weight;
+          types == other.types;
 
   @override
   int get hashCode =>
       id.hashCode ^
       exp.hashCode ^
       height.hashCode ^
+      weight.hashCode ^
       name.hashCode ^
       sprite.hashCode ^
+      color.hashCode ^
       stats.hashCode ^
-      types.hashCode ^
-      weight.hashCode;
+      types.hashCode;
 
   @override
   String toString() {
-    return 'Pokemon{id: $id, exp: $exp, height: $height, name: $name, sprite: $sprite, stats: $stats, types: $types, weight: $weight}';
+    return 'Pokemon{id: $id, exp: $exp, height: $height, weight: $weight, name: $name, sprite: $sprite, color: $color, stats: $stats, types: $types}';
   }
 }

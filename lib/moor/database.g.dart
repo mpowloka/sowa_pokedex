@@ -495,11 +495,10 @@ class MoorPokemonStatCompanion extends UpdateCompanion<MoorPokemonStatData> {
     this.value = const Value.absent(),
   });
   MoorPokemonStatCompanion.insert({
-    @required int id,
+    this.id = const Value.absent(),
     @required String statName,
     @required int value,
-  })  : id = Value(id),
-        statName = Value(statName),
+  })  : statName = Value(statName),
         value = Value(value);
   static Insertable<MoorPokemonStatData> custom({
     Expression<int> id,
@@ -558,11 +557,8 @@ class $MoorPokemonStatTable extends MoorPokemonStat
   @override
   GeneratedIntColumn get id => _id ??= _constructId();
   GeneratedIntColumn _constructId() {
-    return GeneratedIntColumn(
-      'id',
-      $tableName,
-      false,
-    );
+    return GeneratedIntColumn('id', $tableName, false,
+        hasAutoIncrement: true, declaredAsPrimaryKey: true);
   }
 
   final VerificationMeta _statNameMeta = const VerificationMeta('statName');
@@ -605,8 +601,6 @@ class $MoorPokemonStatTable extends MoorPokemonStat
     final data = instance.toColumns(true);
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id'], _idMeta));
-    } else if (isInserting) {
-      context.missing(_idMeta);
     }
     if (data.containsKey('stat_name')) {
       context.handle(_statNameMeta,
@@ -624,7 +618,7 @@ class $MoorPokemonStatTable extends MoorPokemonStat
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => <GeneratedColumn>{};
+  Set<GeneratedColumn> get $primaryKey => {id};
   @override
   MoorPokemonStatData map(Map<String, dynamic> data, {String tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
@@ -724,10 +718,9 @@ class MoorPokemonTypeCompanion extends UpdateCompanion<MoorPokemonTypeData> {
     this.typeName = const Value.absent(),
   });
   MoorPokemonTypeCompanion.insert({
-    @required int id,
+    this.id = const Value.absent(),
     @required String typeName,
-  })  : id = Value(id),
-        typeName = Value(typeName);
+  }) : typeName = Value(typeName);
   static Insertable<MoorPokemonTypeData> custom({
     Expression<int> id,
     Expression<String> typeName,
@@ -777,11 +770,8 @@ class $MoorPokemonTypeTable extends MoorPokemonType
   @override
   GeneratedIntColumn get id => _id ??= _constructId();
   GeneratedIntColumn _constructId() {
-    return GeneratedIntColumn(
-      'id',
-      $tableName,
-      false,
-    );
+    return GeneratedIntColumn('id', $tableName, false,
+        hasAutoIncrement: true, declaredAsPrimaryKey: true);
   }
 
   final VerificationMeta _typeNameMeta = const VerificationMeta('typeName');
@@ -812,8 +802,6 @@ class $MoorPokemonTypeTable extends MoorPokemonType
     final data = instance.toColumns(true);
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id'], _idMeta));
-    } else if (isInserting) {
-      context.missing(_idMeta);
     }
     if (data.containsKey('type_name')) {
       context.handle(_typeNameMeta,
@@ -825,7 +813,7 @@ class $MoorPokemonTypeTable extends MoorPokemonType
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => <GeneratedColumn>{};
+  Set<GeneratedColumn> get $primaryKey => {id};
   @override
   MoorPokemonTypeData map(Map<String, dynamic> data, {String tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;

@@ -20,8 +20,11 @@ part 'database.g.dart';
   PokemonDao,
 ])
 class PokemonDatabase extends _$PokemonDatabase {
-  PokemonDatabase() : super(FlutterQueryExecutor.inDatabaseFolder(
-    path: 'pokemon_database.sqlite', logStatements: true,));
+  PokemonDatabase()
+      : super(FlutterQueryExecutor.inDatabaseFolder(
+          path: 'pokemon_database.sqlite',
+          logStatements: true,
+        ));
 
   @override
   int get schemaVersion => 1;

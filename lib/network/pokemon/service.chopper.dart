@@ -14,7 +14,7 @@ class _$PokemonService extends PokemonService {
 
   final definitionType = PokemonService;
 
-  Future<Response> getPokemonBatch(int limit, dynamic offset) {
+  Future<Response> getPokemonBatch(int limit, int offset) {
     final $url =
         'https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}';
     final $request = Request('GET', $url, client.baseUrl);

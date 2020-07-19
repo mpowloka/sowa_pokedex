@@ -15,7 +15,7 @@ abstract class PokemonService extends ChopperService {
   @Get(path: 'pokemon?limit={limit}&offset={offset}')
   Future<Response> getPokemonBatch(
     @Path('limit') final int limit,
-    @Path('offset') final offset,
+    @Path('offset') final int offset,
   );
 
   @Get(path: 'pokemon/{name}')

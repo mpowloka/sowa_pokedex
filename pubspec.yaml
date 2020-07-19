@@ -36,10 +36,10 @@ dependencies:
   get_it: ^4.0.2
   injectable: ^0.4.0+1
   moor_flutter: ^3.1.0
-  lint: ^1.2.0
   logger: ^0.9.1
   shared_preferences: ^0.5.8
   rxdart: ^0.24.1
+  auto_size_text: ^2.1.0
 
 
 dev_dependencies:

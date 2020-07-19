@@ -84,20 +84,20 @@ class PokemonDao extends DatabaseAccessor<PokemonDatabase>
     });
   }
 
-  Future<void> insertPokemon(final Insertable<MoorPokemonData> pokemon) async {
-    into(moorPokemon).insert(pokemon);
+  Future<int> insertOrReplacePokemon(final Insertable<MoorPokemonData> pokemon) async {
+    return into(moorPokemon).insert(pokemon, mode: InsertMode.insertOrReplace);
   }
 
-  Future<void> insertPokemonType(
+  Future<int> insertOrReplacePokemonType(
     final Insertable<MoorPokemonTypeData> type,
   ) async {
-    into(moorPokemonType).insert(type);
+    return into(moorPokemonType).insert(type, mode: InsertMode.insertOrReplace);
   }
 
-  Future<void> insertPokemonStat(
+  Future<int> insertOrReplacePokemonStat(
     final Insertable<MoorPokemonStatData> stat,
   ) async {
-    into(moorPokemonStat).insert(stat);
+    return into(moorPokemonStat).insert(stat, mode: InsertMode.insertOrReplace);
   }
 
   Future<void> linkPokemonWithType(
