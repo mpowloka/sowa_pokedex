@@ -5,7 +5,7 @@ class PokemonType {
   final String name;
   final Color color;
 
-  PokemonType(this.id, this.name, this.color);
+  const PokemonType(this.id, this.name, this.color);
 
   @override
   bool operator ==(Object other) =>

@@ -1,5 +1,8 @@
 import 'dart:convert';
 
+import 'package:sowa_pokedex/network/pokemon/response/pokemon_batch.dart';
+import 'package:sowa_pokedex/network/pokemon/response/pokemon_details.dart';
+
 class PokemonTestData {
   static final pokemonBatchJson = '''
   {
@@ -33,4 +36,15 @@ class PokemonTestData {
       .trim();
 
   static final pokemonBatchJsonMap = jsonDecode(pokemonBatchJson);
+
+  static final mappedResponse =
+      PokemonBatchResponse.fromJson(pokemonBatchJsonMap);
+
+  static final pokemonDetailsResponses = [
+    PokemonDetailsResponse(0, 0, 1, 'bulbasaur', null, [], [], 0),
+    PokemonDetailsResponse(0, 0, 2, 'ivysaur', null, [], [], 0),
+    PokemonDetailsResponse(0, 0, 3, 'venusaur', null, [], [], 0),
+    PokemonDetailsResponse(0, 0, 4, 'charmander', null, [], [], 0),
+    PokemonDetailsResponse(0, 0, 5, 'charmeleon', null, [], [], 0),
+  ];
 }

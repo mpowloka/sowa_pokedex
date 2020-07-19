@@ -4,7 +4,6 @@ import 'package:mockito/mockito.dart';
 import 'package:sowa_pokedex/network/common/network_calls_retry_handler.dart';
 import 'package:sowa_pokedex/network/common/network_error.dart';
 import 'package:sowa_pokedex/network/pokemon/fetch_pokemon_batch.dart';
-import 'package:sowa_pokedex/network/pokemon/response/pokemon_batch.dart';
 import 'package:sowa_pokedex/network/pokemon/service.dart';
 
 import '../mocks.dart';
@@ -18,8 +17,7 @@ const limit = 10;
 const offset = 20;
 const errorCode = 42;
 const networkError = Right(NetworkError(errorCode, null));
-final mappedResponse =
-    Left(PokemonBatchResponse.fromJson(PokemonTestData.pokemonBatchJsonMap));
+final mappedResponse = Left(PokemonTestData.mappedResponse);
 
 void main() {
   setUp(() {

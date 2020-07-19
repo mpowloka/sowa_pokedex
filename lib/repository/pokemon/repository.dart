@@ -21,6 +21,7 @@ class PokemonRepository {
   final PokemonStatMapper _pokemonStatMapper;
   final PokemonTypeMapper _pokemonTypeMapper;
   final PokemonDao _pokemonDao;
+  final Logger _logger;
 
   PokemonRepository(
     this._fetchPokemonBatch,
@@ -28,7 +29,7 @@ class PokemonRepository {
     this._fetchPokemonDetails,
     this._pokemonMapper,
     this._pokemonStatMapper,
-    this._pokemonTypeMapper,
+    this._pokemonTypeMapper, this._logger,
   );
 
   Stream<List<Pokemon>> watchPokemonList() {
@@ -39,19 +40,19 @@ class PokemonRepository {
     });
   }
 
-  void fetchPokemonBatch() async {
+  Future<void> fetchPokemonBatch() async {
     final offset = await _pokemonDao.getPokemonCount();
     final result = await _fetchPokemonBatch.fetch(_pokemonBatchSize, offset);
 
-    result.fold(
+    await result.fold(
       (pokemonBatch) async {
-        Logger().i('Pokemon batch fetched: $pokemonBatch');
+        _logger.i('Pokemon batch fetched: $pokemonBatch');
         for (final result in pokemonBatch.results) {
           await _downloadPokemonDetails(result);
         }
       },
       (networkError) {
-        Logger().e('Failed to fetch Pokemon batch: $networkError');
+        _logger.e('Failed to fetch Pokemon batch: $networkError');
       },
     );
   }
@@ -61,13 +62,13 @@ class PokemonRepository {
   ) async {
     final result = await _fetchPokemonDetails.fetch(shortInfo.name);
 
-    result.fold(
+    await result.fold(
       (pokemonDetails) async {
-        Logger().i('Pokemon details fetched: $pokemonDetails');
+        _logger.i('Pokemon details fetched: $pokemonDetails');
         await _persistPokemonDetails(pokemonDetails);
       },
       (networkError) {
-        Logger().e('Failed to fetch Pokemon details: $networkError');
+        _logger.e('Failed to fetch Pokemon details: $networkError');
       },
     );
   }
@@ -79,18 +80,18 @@ class PokemonRepository {
     for (final stat in pokemonDetails.stats) {
       final statId = await _pokemonDao.insertOrReplacePokemonStat(
           _pokemonStatMapper.networkToDatabase(stat));
-      Logger().d('Inserted pokemonStat: $stat');
+      _logger.d('Inserted pokemonStat: $stat');
       await _pokemonDao.linkPokemonWithStat(pokemonId, statId);
-      Logger().d(
+      _logger.d(
         'Linked pokemonStat $stat with pokemonId: $pokemonId (pokemonName = ${pokemonDetails.name})',
       );
     }
     for (final type in pokemonDetails.types) {
       final typeId = await _pokemonDao.insertOrReplacePokemonType(
           _pokemonTypeMapper.networkToDatabase(type));
-      Logger().d('Inserted pokemonType: $type');
+      _logger.d('Inserted pokemonType: $type');
       await _pokemonDao.linkPokemonWithType(pokemonId, typeId);
-      Logger().d(
+      _logger.d(
         'Linked pokemonType $type with pokemonId: $pokemonId (pokemonName = ${pokemonDetails.name})',
       );
     }

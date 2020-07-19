@@ -29,7 +29,7 @@ class PokemonMapper {
       exp: Value(networkResponse.exp),
       weight: Value(networkResponse.weight),
       height: Value(networkResponse.height),
-      sprite: Value(networkResponse.sprites.frontSprite),
+      sprite: Value(networkResponse.sprites?.frontSprite),
     );
   }
 

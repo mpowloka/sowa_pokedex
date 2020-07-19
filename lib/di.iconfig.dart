@@ -8,6 +8,7 @@ import 'package:sowa_pokedex/di.dart';
 import 'package:chopper/chopper.dart';
 import 'package:flutter/src/widgets/navigator.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:logger/logger.dart';
 import 'package:sowa_pokedex/network/common/network_calls_retry_handler.dart';
 import 'package:sowa_pokedex/moor/database.dart';
 import 'package:sowa_pokedex/network/pokemon/service.dart';
@@ -27,6 +28,7 @@ void $initGetIt(GetIt g, {String environment}) {
   g.registerLazySingleton<ChopperClient>(() => applicationModule.chopperClient);
   g.registerLazySingleton<GlobalKey<NavigatorState>>(
       () => applicationModule.key);
+  g.registerLazySingleton<Logger>(() => applicationModule.logger);
   g.registerLazySingleton<NetworkCallsRetryHandler>(
       () => NetworkCallsRetryHandler());
   g.registerLazySingleton<PokemonDatabase>(() => PokemonDatabase());
@@ -54,6 +56,7 @@ void $initGetIt(GetIt g, {String environment}) {
         g<PokemonMapper>(),
         g<PokemonStatMapper>(),
         g<PokemonTypeMapper>(),
+        g<Logger>(),
       ));
   g.registerLazySingleton<PokemonListBloc>(() =>
       PokemonListBloc(g<PokemonRepository>(), g<GlobalKey<NavigatorState>>()));

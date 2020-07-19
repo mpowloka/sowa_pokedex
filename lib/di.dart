@@ -2,6 +2,7 @@ import 'package:chopper/chopper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
+import 'package:logger/logger.dart';
 import 'package:sowa_pokedex/network/common/network_constants.dart';
 
 import 'di.iconfig.dart';
@@ -21,4 +22,7 @@ abstract class ApplicationModule {
         baseUrl: kBackendUrl,
         converter: JsonConverter(),
       );
+
+  @lazySingleton
+  Logger get logger => Logger();
 }

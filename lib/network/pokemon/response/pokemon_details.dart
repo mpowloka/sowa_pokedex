@@ -158,7 +158,7 @@ class NetworkPokemonStatName {
 class NetworkPokemonType {
   final NetworkPokemonTypeName type;
 
-  NetworkPokemonType(this.type);
+  const NetworkPokemonType(this.type);
 
   factory NetworkPokemonType.fromJson(final Map<String, dynamic> json) {
     return _$NetworkPokemonTypeFromJson(json);
@@ -186,7 +186,7 @@ class NetworkPokemonType {
 class NetworkPokemonTypeName {
   final String name;
 
-  NetworkPokemonTypeName(this.name);
+  const NetworkPokemonTypeName(this.name);
 
   factory NetworkPokemonTypeName.fromJson(final Map<String, dynamic> json) {
     return _$NetworkPokemonTypeNameFromJson(json);
