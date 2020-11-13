@@ -46,7 +46,7 @@ Zalety:
 - brak konieczności utrzymywania bazowych klas dla Page'ów i ViewModel'i
 - obie paczki są popularne, utrzymywane i uznawane za dobrą praktykę
 
-## DependencyInjection
+## Dependency Injection
 
 Użyty jest pakiet get_it z rozszerzeniem injectable. Pierwszy zawiera silnik DI, a drugi pozwala zastąpić ręczną konfigurację adnotacjami. Wszystkie repozytoria, ViewModel'e, serwisy, bazy danych adnotuje się @injectable(instancja per wywołanie), @singleton lub @lazySingleton. W praktyce nie trzeba potem nigdzie kontruować żadnych klas które nie są Widgetami. Punktem wyjścia - gdzie ręcznie wyciąga się ViewModel'e są BlocProvidery, gdzie przy użyciu metody getIt<ViewModelType>() otrzymywany jest ViewModel ze wsystkimi zależnościami bez konieczności tworzenia fabryki ViewModel'i ani żadnej dodatkowej konfiguracji. Jedynie third-party obiekty (logger, GlobalNavigationKey) są umieszczane ręcznie w odpowiednim module di. Wszystko przypomina Daggera z Androida, ale bez makabrycznego setupu.
 
