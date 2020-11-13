@@ -3,7 +3,7 @@
 ## Spis treści:
 1. ViewModel - View - Model - podział odpowiedzialności
 2. Podział na moduły i feature'y
-3. Implementacja ViewModel'u przy użyciu paczek flutter_bloc & freezed
+3. Implementacja ViewModel'u przy użyciu paczek [flutter_bloc](https://pub.dev/packages/flutter_bloc) & [freezed](https://pub.dev/packages/freezed)
 4. Dependency Injection
 5. Nawigacja
 6. Dobre praktyki
@@ -30,16 +30,16 @@ W folderze lib powinny się znajdować pakiety:
 
 Wewnątrz tych pakietów, dalsze pakiety są segregowane per feature. Nie łączy się w jeden pakiet wszystkich repozytoriów (nikt nigdy nie szuka wszystkich repozytoriów) tylko wszystkie komponenty dotyczące danego feature'a.
 
-## Implementacja ViewModel'u przy użyciu paczek flutter_bloc & freezed
+## Implementacja ViewModel'u przy użyciu paczek [flutter_bloc](https://pub.dev/packages/flutter_bloc) & [moor](https://pub.dev/packages/freezed)
 
-flutter_bloc udostępnia wiele użytecznych klas i Widgetów, na przykład:
+[flutter_bloc](https://pub.dev/packages/flutter_bloc) udostępnia wiele użytecznych klas i Widgetów, na przykład:
 * Cubit - bazowy typ dla ViewModel'u, który pozwala łatwo ustawiać początkowy stan i emitować State'y bez konieczności ręcznego używania BehaviourSubject'ów i takich.
 * BlocBuilder - StreamBuilder dostosowany do podawania State'ów oraz samodzielnie uzyskujący dostęp do ViewModel'u przy użyciu BuildContext.
 * BlocProvider - Provider, który dodatkowo steruje zasięgiem ViewModel'u (dispose)
 * BlocListener i inne alternatywy dla BlocBuildera, które pozwalają w odpowiedzi na State nie przebudowywać się tylko na przykład wyświetlić SnackBar
 * BlocObserver - pozwala dodać logikę do wszystkich ViewModeli, na przykład logowanie zmian w State'ach.
 
-freezed pozwala stworzyć wyjątkowo wygodne State'y - na modę Kotlinowej sealed class.
+[freezed](https://pub.dev/packages/freezed) pozwala stworzyć wyjątkowo wygodne State'y - na modę Kotlinowej sealed class.
 
 Zalety:
 - wygoda
@@ -48,7 +48,7 @@ Zalety:
 
 ## Dependency Injection
 
-Użyty jest pakiet get_it z rozszerzeniem injectable. Pierwszy zawiera silnik DI, a drugi pozwala zastąpić ręczną konfigurację adnotacjami. Wszystkie repozytoria, ViewModel'e, serwisy, bazy danych adnotuje się @injectable(instancja per wywołanie), @singleton lub @lazySingleton. W praktyce nie trzeba potem nigdzie kontruować żadnych klas które nie są Widgetami. Punktem wyjścia - gdzie ręcznie wyciąga się ViewModel'e są BlocProvidery, gdzie przy użyciu metody getIt<ViewModelType>() otrzymywany jest ViewModel ze wsystkimi zależnościami bez konieczności tworzenia fabryki ViewModel'i ani żadnej dodatkowej konfiguracji. Jedynie third-party obiekty (logger, GlobalNavigationKey) są umieszczane ręcznie w odpowiednim module di. Wszystko przypomina Daggera z Androida, ale bez makabrycznego setupu.
+Użyty jest pakiet get_it z rozszerzeniem [injectable](https://pub.dev/packages/injectable). Pierwszy zawiera silnik DI, a drugi pozwala zastąpić ręczną konfigurację adnotacjami. Wszystkie repozytoria, ViewModel'e, serwisy, bazy danych adnotuje się @injectable(instancja per wywołanie), @singleton lub @lazySingleton. W praktyce nie trzeba potem nigdzie kontruować żadnych klas które nie są Widgetami. Punktem wyjścia - gdzie ręcznie wyciąga się ViewModel'e są BlocProvidery, gdzie przy użyciu metody getIt<ViewModelType>() otrzymywany jest ViewModel ze wsystkimi zależnościami bez konieczności tworzenia fabryki ViewModel'i ani żadnej dodatkowej konfiguracji. Jedynie third-party obiekty (logger, GlobalNavigationKey) są umieszczane ręcznie w odpowiednim module di. Wszystko przypomina Daggera z Androida, ale bez makabrycznego setupu.
 
 Zalety:
 * brak konieczności utrzymywania appInjectora
@@ -100,7 +100,7 @@ flutter pub run build_runner build
 Takie klasy można rozpoznać po znajdującej się deklaracji 'part' pod importami, ale nie tylko. Po zmianie konstruktora klasy opatrzonej adnotacją Dependency Injection też trzeba ponownie wygenerować kod.
 
 Paczki, które w tym repo wymagają generowania kodu:
-* freezed
-* injectable
-* moor
-* chopper (networking)
+* [freezed](https://pub.dev/packages/freezed)
+* [injectable](https://pub.dev/packages/injectable)
+* [moor](https://pub.dev/packages/moor)
+* [chopper](https://pub.dev/packages/chopper) (networking)
