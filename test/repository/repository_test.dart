@@ -2,16 +2,16 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:logger/logger.dart';
 import 'package:mockito/mockito.dart';
-import 'package:sowa_pokedex/moor/pokemon/dao.dart';
-import 'package:sowa_pokedex/network/common/network_constants.dart';
-import 'package:sowa_pokedex/network/common/network_error.dart';
-import 'package:sowa_pokedex/network/pokemon/fetch_pokemon_batch.dart';
-import 'package:sowa_pokedex/network/pokemon/fetch_pokemon_details.dart';
-import 'package:sowa_pokedex/repository/pokemon/mapper/pokemon_mapper.dart';
-import 'package:sowa_pokedex/repository/pokemon/mapper/pokemon_stat_mapper.dart';
-import 'package:sowa_pokedex/repository/pokemon/mapper/pokemon_type_mapper.dart';
-import 'package:sowa_pokedex/repository/pokemon/repository.dart';
-import 'package:sowa_pokedex/repository/pokemon/type_color_resolver.dart';
+import 'package:sowa_pokedex/data_moor/pokemon/dao.dart';
+import 'package:sowa_pokedex/data_network/common/network_constants.dart';
+import 'package:sowa_pokedex/data_network/common/network_error.dart';
+import 'package:sowa_pokedex/data_network/pokemon/fetch_pokemon_batch.dart';
+import 'package:sowa_pokedex/data_network/pokemon/fetch_pokemon_details.dart';
+import 'package:sowa_pokedex/domain/pokemon/mapper/pokemon_mapper.dart';
+import 'package:sowa_pokedex/domain/pokemon/mapper/pokemon_stat_mapper.dart';
+import 'package:sowa_pokedex/domain/pokemon/mapper/pokemon_type_mapper.dart';
+import 'package:sowa_pokedex/domain/pokemon/repository.dart';
+import 'package:sowa_pokedex/domain/pokemon/type_color_resolver.dart';
 
 import '../network/pokemon/test_data.dart';
 import 'mocks.dart';
@@ -113,12 +113,12 @@ void main() {
 
 void mockFetchPokemonBatchFailed() {
   when(_fetchPokemonBatchMock.fetch(10, _pokemonCount)).thenAnswer(
-      (_) => Future.value(Right(NetworkError(kHttpStatusInternalError, null))));
+      (_) => Future.value(Right(NetworkError(NetworkConstants.httpStatusInternalError, null))));
 }
 
 void mockFetchPokemonDetailsFailed() {
   when(_fetchPokemonDetailsMock.fetch(any)).thenAnswer(
-      (_) => Future.value(Right(NetworkError(kHttpStatusInternalError, null))));
+      (_) => Future.value(Right(NetworkError(NetworkConstants.httpStatusInternalError, null))));
 }
 
 void mockFetchPokemonBatchIsSuccessful() {

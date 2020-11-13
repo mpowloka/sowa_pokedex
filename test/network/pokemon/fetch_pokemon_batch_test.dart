@@ -1,10 +1,10 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:sowa_pokedex/network/common/network_calls_retry_handler.dart';
-import 'package:sowa_pokedex/network/common/network_error.dart';
-import 'package:sowa_pokedex/network/pokemon/fetch_pokemon_batch.dart';
-import 'package:sowa_pokedex/network/pokemon/service.dart';
+import 'package:sowa_pokedex/data_network/common/network_calls_retry_handler.dart';
+import 'package:sowa_pokedex/data_network/common/network_error.dart';
+import 'package:sowa_pokedex/data_network/pokemon/fetch_pokemon_batch.dart';
+import 'package:sowa_pokedex/data_network/pokemon/service.dart';
 
 import '../mocks.dart';
 import 'test_data.dart';

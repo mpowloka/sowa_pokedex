@@ -1,11 +1,11 @@
 import 'package:logger/logger.dart';
 import 'package:mockito/mockito.dart';
-import 'package:sowa_pokedex/moor/pokemon/dao.dart';
-import 'package:sowa_pokedex/network/pokemon/fetch_pokemon_batch.dart';
-import 'package:sowa_pokedex/network/pokemon/fetch_pokemon_details.dart';
-import 'package:sowa_pokedex/repository/pokemon/mapper/pokemon_stat_mapper.dart';
-import 'package:sowa_pokedex/repository/pokemon/mapper/pokemon_type_mapper.dart';
-import 'package:sowa_pokedex/repository/pokemon/type_color_resolver.dart';
+import 'package:sowa_pokedex/data_moor/pokemon/dao.dart';
+import 'package:sowa_pokedex/data_network/pokemon/fetch_pokemon_batch.dart';
+import 'package:sowa_pokedex/data_network/pokemon/fetch_pokemon_details.dart';
+import 'package:sowa_pokedex/domain/pokemon/mapper/pokemon_stat_mapper.dart';
+import 'package:sowa_pokedex/domain/pokemon/mapper/pokemon_type_mapper.dart';
+import 'package:sowa_pokedex/domain/pokemon/type_color_resolver.dart';
 
 class PokemonTypeColorResolverMock extends Mock
     implements PokemonTypeColorResolver {}

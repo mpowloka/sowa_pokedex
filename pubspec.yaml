@@ -32,7 +32,7 @@ dependencies:
   chopper: ^2.0.0
   json_annotation: ^3.0.1
   freezed_annotation: ^0.11.0
-  flutter_bloc: ^5.0.1
+  flutter_bloc: ^6.1.1
   get_it: ^4.0.2
   injectable: ^0.4.0+1
   moor_flutter: ^3.1.0
@@ -40,6 +40,7 @@ dependencies:
   shared_preferences: ^0.5.8
   rxdart: ^0.24.1
   auto_size_text: ^2.1.0
+  connectivity: ^2.0.1
 
 
 dev_dependencies:
@@ -51,7 +52,7 @@ dev_dependencies:
   freezed: ^0.11.2
   moor_generator: ^3.2.0
   injectable_generator: ^0.4.1
-  bloc_test: ^6.0.1
+  bloc_test: ^7.1.0
   mockito: ^4.1.1
 
 

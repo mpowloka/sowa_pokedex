@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sowa_pokedex/bloc/pokemon_list/bloc.dart';
-import 'package:sowa_pokedex/ui/home/screen.dart';
+import 'package:sowa_pokedex/ui/pokemon_list/page.dart';
+import 'package:sowa_pokedex/ui/pokemon_list/view_model/view_model.dart';
 
 import '../di.dart';
 
@@ -18,8 +18,8 @@ class PokedexApp extends StatelessWidget {
       title: 'Sowa Pokedex',
       navigatorKey: getIt<GlobalKey<NavigatorState>>(),
       home: BlocProvider(
-        create: (context) => getIt<PokemonListBloc>(),
-        child: HomeScreen(),
+        create: (context) => getIt<PokemonListViewModel>(),
+        child: PokemonListPage(),
       ),
     );
   }

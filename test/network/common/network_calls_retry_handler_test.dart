@@ -2,8 +2,8 @@ import 'package:chopper/chopper.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:sowa_pokedex/network/common/network_calls_retry_handler.dart';
-import 'package:sowa_pokedex/network/common/network_error.dart';
+import 'package:sowa_pokedex/data_network/common/network_calls_retry_handler.dart';
+import 'package:sowa_pokedex/data_network/common/network_error.dart';
 
 import '../mocks.dart';
 

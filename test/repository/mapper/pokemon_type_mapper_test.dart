@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:moor_flutter/moor_flutter.dart';
-import 'package:sowa_pokedex/moor/database.dart';
-import 'package:sowa_pokedex/network/pokemon/response/pokemon_details.dart';
-import 'package:sowa_pokedex/repository/pokemon/mapper/pokemon_type_mapper.dart';
-import 'package:sowa_pokedex/repository/pokemon/model/pokemon_type.dart';
-import 'package:sowa_pokedex/repository/pokemon/type_color_resolver.dart';
+import 'package:sowa_pokedex/data_moor/database.dart';
+import 'package:sowa_pokedex/data_network/pokemon/response/pokemon_details.dart';
+import 'package:sowa_pokedex/domain/pokemon/mapper/pokemon_type_mapper.dart';
+import 'package:sowa_pokedex/domain/pokemon/model/pokemon_type.dart';
+import 'package:sowa_pokedex/domain/pokemon/type_color_resolver.dart';
 
 import '../mocks.dart';
 

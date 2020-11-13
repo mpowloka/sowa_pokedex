@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:sowa_pokedex/network/pokemon/response/pokemon_batch.dart';
-import 'package:sowa_pokedex/network/pokemon/response/pokemon_details.dart';
+import 'package:sowa_pokedex/data_network/pokemon/response/pokemon_batch.dart';
+import 'package:sowa_pokedex/data_network/pokemon/response/pokemon_details.dart';
 
 class PokemonTestData {
   static final pokemonBatchJson = '''
