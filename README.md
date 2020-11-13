@@ -4,8 +4,10 @@
 1. ViewModel - View - Model - podział odpowiedzialności
 2. Podział na moduły i feature'y
 3. Implementacja ViewModel'u przy użyciu paczek flutter_bloc & freezed
-4. Dobre praktyki
-5. Generowanie kodu
+4. Dependency Injection
+5. Nawigacja
+6. Dobre praktyki
+7. Generowanie kodu
 
 ## ViewModel - View - Model - podział odpowiedzialności
 Warstwa UI, czyli wszystko co jest Widgetem zajmuje się tylko rysowaniem danych otrzymanych z ViewModelu w formie pojedyńczego obiektu State. Każdy ViewModel definiuje listę możliwych stanów w jakich może się znaleźć odpowiadającu mu ekran - na przykład DataAvailableState, NetworkUnavailableState, LoadingState i tak dalej. UI używa jednego BlocBuildera (StreamBuilder+) do rozstrzygnięcia w jakim stanie się znajduje i narysowania go w odpowiedni sposób. Dodatkowo, informuje ViewModel o interakcjach z użytkownikiem, poprzez wywoływanie odpowiednich metod na ViewModel'u. ViewModel może w odpowiedzi na interakcję emitować nowy stan lub też nie.
@@ -42,5 +44,55 @@ freezed pozwala stworzyć wyjątkowo wygodne State'y - na modę Kotlinowej seale
 Zalety:
 - wygoda
 - brak konieczności utrzymywania bazowych klas dla Page'ów i ViewModel'i
+- obie paczki są popularne, utrzymywane i uznawane za dobrą praktykę
+
+## DependencyInjection
+
+Użyty jest pakiet get_it z rozszerzeniem injectable. Pierwszy zawiera silnik DI, a drugi pozwala zastąpić ręczną konfigurację adnotacjami. Wszystkie repozytoria, ViewModel'e, serwisy, bazy danych adnotuje się @injectable(instancja per wywołanie), @singleton lub @lazySingleton. W praktyce nie trzeba potem nigdzie kontruować żadnych klas które nie są Widgetami. Punktem wyjścia - gdzie ręcznie wyciąga się ViewModel'e są BlocProvidery, gdzie przy użyciu metody getIt<ViewModelType>() otrzymywany jest ViewModel ze wsystkimi zależnościami bez konieczności tworzenia fabryki ViewModel'i ani żadnej dodatkowej konfiguracji. Jedynie third-party obiekty (logger, GlobalNavigationKey) są umieszczane ręcznie w odpowiednim module di. Wszystko przypomina Daggera z Androida, ale bez makabrycznego setupu.
+
+Zalety:
+* brak konieczności utrzymywania appInjectora
+* brak konieczności utrzymywania ViewModelFactory
+* bardzo łatwe zmienianie istniejących klas i dodawanie nowych. Uruchamia się tylko ponownie generowanie kodu i wszystkie zależności trafiają tam, gdzie są potrzebne. Pozwala to w końcu programować obiektowo, zamiast statycznych metod, bo w końcu nie wiąże się to z dodatkowym wysiłkiem.
+
+## Nawigacja
+
+Nawigacja jest rozwiązana banalnie - Page posiada statyczną metodę getRoute(), która zwraca Route. Dzięki temu nie trzeba utrzymywać osobnego pliku do nawigacji, porcji stringów, jest zapewnione type-safety przy przekazywaniu argumentów i jest dużo większa kontrola nad tworzonymi ścieżkami. Named routes nie pozwalają na przykład w łatwy sposób stworzyć Route'a, który jest dialogiem ani różnych przejść na różnych widokach.
+
+Dodatkowo nawigacja znajduje się w ViewModelu przy użyciu injectowanego GlobalKey<NavigatorState>. To pozwala rozwiązać przypadki, kiedy cel nawigacji nie jest znany zawczasu. Niektóre przyciski mogą nawigować w różne miejsca w zależności od stanu danych (slider w P&P), a widok z definicji nie powinien zawierać logiki.
+
+Zalety:
+* brak konieczności utrzymywania wiecznie rozrastającego się pliku routes (open-closed principle)
+* większa kontrola nad nawigacją
+* możliwośc czystego conditional-nawigowania
 
 ## Dobre praktyki
+
+### Tylko jeden Widget komunikuje się z ViewModelem.
+
+Tylko jeden Widget komunikuje się z ViewModelem, pozostałe otrzymują od niego tylko VoidCallbacki. Dzięki temu mniejsze części widoku są 'głupie', tak jak być powinny. Dzięki temu można łatwo prześledzić komunikację UI - ViewModel i dużo łątwiej ponownie wykorzystywać mniejsze Widgety w innych ekranach.
+
+Zalety:
+* łatwiejszy reuse mniejszych Widgetów
+* przejrzysta komunikacja z ViewModelem
+
+### Either zamiast customowych Resultów
+
+Result albo RequestResult są dobrą praktyką, ale można je w zupełności zastąpić gotową monadą z dartz Either<Left, Right>. Warto to zrobić, żeby utrzymywać mniej kodu, a w dodatku taka generyczna monada ma mnóstwo funkcji, które ułatwiają obsługiwanie jej warości (fold(), leftMap(), rightMap()). Własnoręczne dopisywanie takich funkcji jest uciążliwe i nie zrobimy tego lepiej niż paczka, która jest zadbana i w tym się specjalizuje.
+
+Zalety:
+* mniej kodu do utrzymania
+* dostęp do wielu utility metod
+
+## Generowanie kodu
+
+Po wprowadzeniu zmian w pliku, który bierze udział w generowaniu kodu trzeba wpisać w terminalu:
+flutter pub run build_runner build
+
+Takie klasy można rozpoznać po znajdującej się deklaracji 'part' pod importami, ale nie tylko. Po zmianie konstruktora klasy opatrzonej adnotacją Dependency Injection też trzeba ponownie wygenerować kod.
+
+Paczki, które w tym repo wymagają generowania kodu:
+* freezed
+* injectable
+* moor
+* chopper (networking)
