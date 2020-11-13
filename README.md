@@ -86,7 +86,7 @@ Zalety:
 
 ### Either zamiast customowych Resultów
 
-Result albo RequestResult są dobrą praktyką, ale można je w zupełności zastąpić gotową monadą z dartz Either<Left, Right>. Warto to zrobić, żeby utrzymywać mniej kodu, a w dodatku taka generyczna monada ma mnóstwo funkcji, które ułatwiają obsługiwanie jej warości (fold(), leftMap(), rightMap()). Własnoręczne dopisywanie takich funkcji jest uciążliwe i nie zrobimy tego lepiej niż paczka, która jest zadbana i w tym się specjalizuje.
+Result albo RequestResult są dobrą praktyką, ale można je w zupełności zastąpić gotową monadą z [dartz](https://pub.dev/packages/dartz) Either<Left, Right>. Warto to zrobić, żeby utrzymywać mniej kodu, a w dodatku taka generyczna monada ma mnóstwo funkcji, które ułatwiają obsługiwanie jej warości (fold(), leftMap(), rightMap()). Własnoręczne dopisywanie takich funkcji jest uciążliwe i nie zrobimy tego lepiej niż paczka, która jest zadbana i w tym się specjalizuje.
 
 Zalety:
 * mniej kodu do utrzymania
