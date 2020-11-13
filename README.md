@@ -68,6 +68,14 @@ Zalety:
 
 ## Dobre praktyki
 
+### Osobne modele danych w poszczególnych warstwach danych i w warstwie biznesowej
+
+Używanie jednego modelu danych w całej aplikacji (na przykład ProductDto) wiąze się z problemami. Wiele informacji pobieranych z sieci nie ma znaczenia dla UI, a często mogą wręcz różnić się od tego co ten potrzebuje. To samo z modelami dotyczącymi baz danych. Co więcej, UI może potrzebować danych, które nie są wprost pobrane z sieci a są dynamicznie konstruowane, dodawane lub filtrowane. Dlatego warto jest mieć po jednym modelu dla każdego źródła danych oraz model biznesowy (który będzie używany również w UI). Repozytorium przy pomocy mapperów powinno zająć się tłumaczeniem poszczególnych modeli danych na ten czytelny dla siebie i dla UI.
+
+Zalety:
+* Możliwość filtrowania, dodawania i usuwania części danych przed przekazaniem ich do UI lub z UI do źródeł danych.
+* do UI nie trafia logika typowa dla źródeł danych (mapowanie JSON'ów, korelacyjne id z bazy danych itp.)
+
 ### Tylko jeden Widget komunikuje się z ViewModelem.
 
 Tylko jeden Widget komunikuje się z ViewModelem, pozostałe otrzymują od niego tylko VoidCallbacki. Dzięki temu mniejsze części widoku są 'głupie', tak jak być powinny. Dzięki temu można łatwo prześledzić komunikację UI - ViewModel i dużo łątwiej ponownie wykorzystywać mniejsze Widgety w innych ekranach.
