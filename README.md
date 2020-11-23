@@ -30,7 +30,7 @@ W folderze lib powinny się znajdować pakiety:
 
 Wewnątrz tych pakietów, dalsze pakiety są segregowane per feature. Nie łączy się w jeden pakiet wszystkich repozytoriów (nikt nigdy nie szuka wszystkich repozytoriów) tylko wszystkie komponenty dotyczące danego feature'a.
 
-## Implementacja ViewModel'u przy użyciu paczek [flutter_bloc](https://pub.dev/packages/flutter_bloc) & [moor](https://pub.dev/packages/freezed)
+## Implementacja ViewModel'u przy użyciu paczek [flutter_bloc](https://pub.dev/packages/flutter_bloc) & [freezed](https://pub.dev/packages/freezed)
 
 [flutter_bloc](https://pub.dev/packages/flutter_bloc) udostępnia wiele użytecznych klas i Widgetów, na przykład:
 * Cubit - bazowy typ dla ViewModel'u, który pozwala łatwo ustawiać początkowy stan i emitować State'y bez konieczności ręcznego używania BehaviourSubject'ów i takich.
