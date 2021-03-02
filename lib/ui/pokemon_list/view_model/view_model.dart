@@ -25,7 +25,7 @@ class PokemonListViewModel extends Cubit<PokemonListState> {
   void init() {
     _subscription = Rx.combineLatest3(
         _pokemonRepository.watchPokemonList(),
-        _connectionChecker.watchInternetConnectionAvailable(),
+        _connectionChecker.internetConnectionAvailable,
         _pokemonRepository.watchPokemonCount(),
         (pokemonList, connectionAvailable, pokemonCount) {
       if (!connectionAvailable) {

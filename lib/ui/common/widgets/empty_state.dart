@@ -9,10 +9,10 @@ class EmptyState extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    return Center(
-        child: Padding(
+    return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           AutoSizeText(
             'No pokemon available. Maybe try in a more grassy area.',
@@ -23,6 +23,6 @@ class EmptyState extends StatelessWidget {
           RaisedButton(child: Text('Reload'), onPressed: onReloadTapped)
         ],
       ),
-    ));
+    );
   }
 }
